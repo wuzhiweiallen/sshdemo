@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+<constant name="struts.i18n.encoding" value="utf-8"></constant> 
+	<package name="demo1" extends="struts-default" namespace="/">
+		<!-- class属性里面不写action全路径了，因为写，action对象创建两次
+			写spring配置的action的bean的id值
+		 -->
+		<!-- <action name="userAction" class="userAction"></action> -->
+		<action name="userAction" class="userAction" >
+			<result name="LOGINSUCCESS">/success.jsp</result>
+			<result name="LOGINFAIL">/fail.jsp</result>
+		</action>
+	</package>
+</struts>
+
+
+
