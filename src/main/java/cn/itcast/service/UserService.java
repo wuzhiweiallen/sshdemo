@@ -1,27 +1,16 @@
 package cn.itcast.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
-import cn.itcast.dao.UserDao;
-import cn.itcast.dao.UserDaoImpl;
-import cn.itcast.entity.User;
+import cn.itcast.entity.TimeLine;
 
-@Transactional
-@Service("userService")
-public class UserService {
-
-	@Autowired
-	private UserDao userDao;
+public interface UserService {
+	/**
+	 * 
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	public boolean login(String username,String password);
 	
-
-	public boolean login(String username,String password){;
-	
-		User user = userDao.login(username,password);
-		if(user != null){
-			return true;
-		}
-		return false;	
-	}
 }

@@ -3,10 +3,8 @@ package cn.itcast.dao;
 import java.util.List;
 
 import org.hibernate.Query;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -22,9 +20,9 @@ public class UserDaoImpl implements UserDao {
 		return this.sessionFactory.getCurrentSession();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public User login(String username,String password) {
 		
-		@SuppressWarnings("all")
 		Query query = this.getCurrentSession().createQuery("from User where username=? and password=?");
 		query.setParameter(0, username);
 		query.setParameter(1, password);
@@ -32,10 +30,9 @@ public class UserDaoImpl implements UserDao {
 		if(list != null && list.size() > 0){
 			return list.get(0);
 		}
-		return null;
 		
+		return null;
 	}
-
 	
 }
 

@@ -1,13 +1,13 @@
 package cn.itcast.action;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 import cn.itcast.entity.User;
 import cn.itcast.service.UserService;
+import cn.itcast.service.UserServiceImpl;
+
+import com.opensymphony.xwork2.ActionSupport;
 
 @Controller("userAction")
 public class UserAction extends ActionSupport {
@@ -25,11 +25,12 @@ public class UserAction extends ActionSupport {
 		this.user = user;
 	}
 
-	@Override
-	public String execute() throws Exception {
+	public String login() throws Exception {
 		boolean loginFlag = userService.login(user.getUsername(), user.getPassword());
 		if(!loginFlag)
-			return "LOGINFAIL";
-		return "LOGINSUCCESS";
+			return ERROR;
+		
+		return SUCCESS;
 	}
+	
 }
