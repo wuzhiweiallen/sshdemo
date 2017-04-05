@@ -10,16 +10,16 @@
 		 -->
 		<!-- <action name="userAction" class="userAction"></action> -->
 		<action name="user_*" class="userAction" method="{1}">
-			<result name="success" type="chain">timeLine</result>
+			<result name="success" type="chain">timeLine_pagination</result>
 			<result name="error">/fail.jsp</result>
 		</action>
-		<action name="timeLine" class="timeLineAction" method="getTimeLine">
+		<!-- <action name="GetTimeLine" class="timeLineAction" method="getTimeLine">
 			<result name="success">/success.jsp</result>
 			<result name="error">/fail.jsp</result>
-		</action>
-		<action name="timeLine_save" class="timeLineAction" method="save">
-			<!-- <result name="success">/success.jsp</result>
-			<result name="error">/fail.jsp</result> -->
+		</action> -->
+		<action name="timeLine_*" class="timeLineAction" method="{1}">
+			<result name="success">/success.jsp</result>
+			<result name="error">/fail.jsp</result>
 		</action>
 	</package>
 </struts>

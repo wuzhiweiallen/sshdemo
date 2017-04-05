@@ -6,152 +6,73 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>jQuery QQ时间轴代码</title>
-
-<style>
-* {
-	margin: 0;
-	padding: 0
-}
-
-body {
-	font-size: 14px;
-	font-family: "微软雅黑";
-	background: url("images/2.jpg") top no-repeat;
-	background-attachment: fixed;
-	z-index: 0;
-	background-size: 100%;
-}
-
-.box {
-	width: 960px;
-	height: 2000px;
-	margin: 100px auto;
-	position: relative;
-	z-index: 1;
-}
-
-/*内容发布区域*/
-.box .boxcenter {
-	width: 500px;
-	height: 200px;
-	background: #fff;
-	position: absolute;
-	top: 80px;
-	left: 180px;
-	border: 1px solid green;
-	border-radius: 6px;
-}
-
-.box .boxcenter .boxc_t {
-	height: 30px;
-	line-height: 30px;
-}
-
-.box .boxcenter .boxc_t h4 {
-	padding-left: 20px;
-	background: #3BBFB4;
-	border-top-left-radius: 6px;
-	border-top-right-radius: 6px;
-}
-
-.box .boxcenter .boxc_c {
-	width: 460px;
-	height: 100px;
-	border: 1px solid #A6C8FF;
-	margin: 8px auto;
-	text-indent: 10px;
-	box-shadow: 0 0 4px #A6C8FF;
-}
-
-.box .boxcenter .boxc_b {
-	width: 80px;
-	height: 30px;
-	position: absolute;
-	right: 10px;
-	bottom: 8px;
-}
-
-.box .boxcenter .boxc_b a {
-	font-size: 14px;
-	color: #fff;
-	line-height: 30px;
-	background: #3bbfb4;
-	border-radius: 6px;
-	display: block;
-	text-align: center;
-	text-decoration: none;
-}
-
-.box .boxcenter .boxc_b a:hover {
-	background: #2C8E86;
-}
-
-.box .timeline {
-	width: 60px;
-	height: 100%;
-	position: absolute;
-	top: 100px;
-	left: 80px;
-	border-right: 2px solid #5d7895;
-} /**/
-.timeline .timeline_t {
-	width: 50px;
-	height: 50px;
-	border-radius: 50%;
-	border: 1px solid #fff;
-	background: url("images/100.png") no-repeat;
-	background-size: 100%;
-}
-
-.timeline .nextbox {
-	width: 380px;
-	height: 80px;
-	position: absolute;
-	top: 260px;
-	left: 60px;
-}
-
-.a {
-	width: 380px;
-	height: 80px;
-	background: #fff;
-	border-radius: 6px;
-	margin-top: 30px;
-	font-size: 16px;
-	line-height: 20px;
-	text-indent: 20px;
-	word-break: break-all;
-	position: relative;
-	left: 6px;
-}
-
-.a .b {
-	width: 6px;
-	height: 6px;
-	border-radius: 50%;
-	border: 2px solid #fff;
-	background: #9DCFE1;
-	position: absolute;
-	top: 35px;
-	left: -10px;
-}
-
-#time {
-	font-size: 20px;
-	color: #ababab;
-}
-
-#hour {
-	font-size: 12px;
-	color: #92CADE;
-}
-</style>
+<title></title>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<link rel="stylesheet" href="css/bootstrap-datetimepicker.css">
 
 </head>
-
-
 <body>
+	<%-- <form action="user_login" class="login" method="post">
+		<div class="input-group col-md-3">
+			<div class="form-group">
+				<label for="name">名称</label> <input type="text" class="form-control"
+					id="name" placeholder="请输入名称">
+			</div>
+			<span class="input-group-btn">
+				<button class="btn btn-info btn-search">查找</button>
+			</span>
+		</div>
+	</form> --%>
+
+	<form name="form1" action="timeLine_searchTimeLine.action"
+		method="post" class="form-group">
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-3">
+				<div class="form-group">
+					<label for="name">姓名</label> <input type="text"
+						class="form-control" id="name" name="searchVO.username"
+						placeholder="请输入名称">
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-3">
+				<div class="form-group">
+					<label for="name">内容</label> <input type="text"
+						class="form-control" id="content" name="searchVO.content"
+						placeholder="请输入内容">
+				</div>
+			</div>
+			<div class="row">
+				<div class='col-xs-12 col-sm-6 col-md-3'>
+					<div class="form-group">
+						<label>选择日期：</label>
+						<!--指定 date标记-->
+						<div class='input-group date'>
+							<input type='text' id='datetimeStart'
+								name="searchVO.datetimeStart" class="form-control" /> <span
+								class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"></span>
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class='col-xs-12 col-sm-6 col-md-3'>
+					<div class="form-group">
+						<label>选择日期+时间：</label>
+						<!--指定 date标记-->
+						<div class='input-group date'>
+							<input type='text' id='datetimeEnd' name="searchVO.datetimeEnd"
+								class="form-control" /> <span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button type="submit" class="btn btn-info btn-search">查询</button>
+	</form>
+
 	<div class="box">
 
 		<!--内容发布区域-->
@@ -163,78 +84,122 @@ body {
 			<div class="boxc_b">
 				<a href="#">发布</a>
 			</div>
+			<table>
+				<tr align="center">
+					<td>
+					<td colspan="6"><s:a href="timeLine_pagination.action?curpage=1">首页</s:a>
+						<s:a href="timeLine_pagination.action?curpage=%{#request.prepage}">上页</s:a> <s:a
+						href="timeLine_pagination.action?curpage=%{#request.nextpage}">下页</s:a> <s:a
+						href="timeLine_pagination.action?curpage=%{#request.lastpage}">尾页</s:a> 当前第<s:property
+							value="#request.curpage" />页，总共<s:property value="#request.total" />条记录</td>
+				</tr>
+			</table>
 		</div>
+
 
 		<!--时光轴线-->
 		<div class="timeline">
 			<div class="timeline_t"></div>
+			<%-- <div class="nextbox">
+				<s:iterator value="list">
+				<div class="b"></div>
+				    <div class="boxcenter">
+			<div class="boxc_t">
+				<h4><s:property value="logTime" /></h4>
+			</div>
+			<div class="boxc_c" contenteditable="true" id="aa"><s:property value="content" /></div>
+			<div class="boxc_b">
+				<a href="#">删除</a>
+			</div>
+		    </div> --%>
 			<div class="nextbox">
-				<s:iterator value="timeLineList">
-
+				<s:iterator value="list">
 					<div class='a'>
 						<div class="b"></div>
-						<span id="time">
-						<s:property value="logTime" />&nbsp;&nbsp;<span
-							id="hour">17:50</span></span><br>
+						<span id="time"> <s:property value="logTime" />&nbsp;&nbsp;<%-- <span
+							id="hour">17:50</span> --%></span><br>
 						<p style="padding: 4px">
+							<h4>
 							<s:property value="content" />
+						</h4>
 						</p>
+						<s:a href="timeLine_deleteTimeLineById.action?userId=%{userId}">
+							<button type="button" id="deleteTimeLine"
+								class="btn btn-info btn-search">删除</button>
+						</s:a>
 					</div>
+
 				</s:iterator>
 			</div>
 		</div>
-
 	</div>
-
-	<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
-	<script type="text/javascript">
-		$(function() {
-			$(".box").find(".boxc_b").click(
-					function() {
-						var content = $(".boxc_c").text();//.appendTo("nextbox");
-						if (content == "") {
-							alert("请输入内容喔！");
-							return;
-						}
-						$.ajax({  
-				            url:'/sshdemo/timeLine_save.action',  
-				            type:'POST', 
-				            Async:false,
-				            data:{"content":content},  
-				            dataType:'json',  
-				            success:function (data) {  
-				            	alert("1");
-				               /*  $("#allUser").append("输出了：id:" + data.hello); */  
-				            }  
-				        });  
-						window.location.reload()
-						/* var dateDom = new Date();
-						//获取本地时间，年月日时分
-						var year = dateDom.getFullYear();
-						var month = dateDom.getMonth() + 1;
-						var day = dateDom.getDate();
-						var hour = dateDom.getHours();
-						var min = dateDom.getMinutes();
-						$(".nextbox").prepend(
-								"<div class='a'>" + "<div class='b'></div>"
-										+ "<span id='time'>" + year + "-"
-										+ month + "-" + day + "&nbsp;&nbsp;"
-										+ "<span id='hour'>" + hour + ":" + min
-										+ "</span>" + "</span>" + "<br>"
-										+ "<p style='padding:4px'>" + center
-										+ "</p>" + "</div>"); */
-						$(".boxc_c").text("");
-					});
-			//alert(1);
-			$(".boxc_c").keydown(function(event) {
-				var len = $(".boxc_c").text().length;
-				if (len > 70) {
-					alert("够了，你别输入了，哪儿那么多话儿！");
-				}
-			});
-
-		});
-	</script>
 	<div style="text-align: center;"></div>
 </body>
-</html>
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script src="js/bootstrap-datetimepicker.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/locales/bootstrap-datetimepicker.zh-CN.js"
+	type="text/javascript" /></script>
+<script type="text/javascript">
+	$('#datetimeStart').datetimepicker({
+		minView : "month", //选择日期后，不会再跳转去选择时分秒 
+		language : 'zh-CN',
+		format : 'yyyy-mm-dd',
+		todayBtn : 1,
+		autoclose : 1,
+	});
+	$('#datetimeEnd').datetimepicker({
+		minView : "month", //选择日期后，不会再跳转去选择时分秒 
+		language : 'zh-CN',
+		format : 'yyyy-mm-dd',
+		todayBtn : 1,
+		autoclose : 1,
+	});
+	$(function() {
+		$(".box").find(".boxc_b").click(function() {
+			var content = $(".boxc_c").text();//.appendTo("nextbox");
+			if (content == "") {
+				alert("请输入内容喔！");
+				return;
+			}
+			$.ajax({
+				url : '/sshdemo/timeLine_save.action',
+				type : 'POST',
+				Async : false,
+				data : {
+					"content" : content
+				},
+				dataType : 'json',
+				success : function(data) {
+
+				}
+			});
+			window.location.reload();
+			/* var dateDom = new Date();
+			//获取本地时间，年月日时分
+			var year = dateDom.getFullYear();
+			var month = dateDom.getMonth() + 1;
+			var day = dateDom.getDate();
+			var hour = dateDom.getHours();
+			var min = dateDom.getMinutes();
+			$(".nextbox").prepend(
+					"<div class='a'>" + "<div class='b'></div>"
+							+ "<span id='time'>" + year + "-"
+							+ month + "-" + day + "&nbsp;&nbsp;"
+							+ "<span id='hour'>" + hour + ":" + min
+							+ "</span>" + "</span>" + "<br>"
+							+ "<p style='padding:4px'>" + center
+							+ "</p>" + "</div>"); */
+			$(".boxc_c").text("");
+		});
+		//alert(1);
+		$(".boxc_c").keydown(function(event) {
+			var len = $(".boxc_c").text().length;
+			if (len > 70) {
+				alert("够了，你别输入了，哪儿那么多话儿！");
+			}
+		});
+
+	});
+</script></
+						html>
