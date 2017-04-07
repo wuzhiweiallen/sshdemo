@@ -25,10 +25,26 @@ public class UserServiceImpl implements UserService{
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
 			request.setAttribute("username", user.getUsername());
+			session.setAttribute("imagepath", user.getImagePath());
 			return true;
 		}
 		
 		return false;	
 	}
-
+	
+	public void register(User user){
+		userDao.save(user);
+	}
+	
+	public void updateUser(User user){
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpSession session = request.getSession();
+		User sessionUser = (User) session.getAttribute("user");
+		if(user!=null && (user.getImagePath() == null || user.getImagePath().isEmpty())){
+			user.setImagePath(sessionUser.getImagePath()); 
+		}
+		user.setUid(sessionUser.getUid());
+		userDao.updateUser(user);
+	}
+	
 }

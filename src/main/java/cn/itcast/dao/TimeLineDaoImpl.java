@@ -1,6 +1,8 @@
 package cn.itcast.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Query;
@@ -32,7 +34,7 @@ public class TimeLineDaoImpl implements TimeLineDao {
 		SQLQuery query = this
 				.getCurrentSession()
 				.createSQLQuery(
-						"select * from timeline where username = ? order by logTime desc")
+						"select * from timeline where username = ? and recordStatus = 'A' order by logTime desc")
 				.addEntity(TimeLine.class);
 		query.setParameter(0, username);
 		List<TimeLine> timeLineList = query.list();
@@ -42,13 +44,19 @@ public class TimeLineDaoImpl implements TimeLineDao {
 
 	@SuppressWarnings("unchecked")
 	public List<TimeLine> getTimeLine(SearchVO searchVO) {
-		StringBuffer sql = new StringBuffer("select * from timeline where 1=1 ");
+		StringBuffer sql = new StringBuffer("select * from timeline where recordStatus = 'A' ");
 		if (searchVO != null) {
 			if (StringUtils.isNotEmpty(searchVO.getUsername())) {
 				sql.append("and username = '" + searchVO.getUsername()+"'");
 			}
 			if (StringUtils.isNotEmpty(searchVO.getContent())) {
 				sql.append("and content like '%" + searchVO.getContent()+"%'");
+			}
+			if(StringUtils.isEmpty(searchVO.getDatetimeStart()) && StringUtils.isNotEmpty(searchVO.getDatetimeEnd())){
+				sql.append("and logTime <="+" DATE_ADD('"+searchVO.getDatetimeEnd()+"',INTERVAL 1 DAY)");
+			}
+			if(StringUtils.isNotEmpty(searchVO.getDatetimeStart()) && StringUtils.isEmpty(searchVO.getDatetimeEnd())){
+				sql.append("and logTime >="+searchVO.getDatetimeStart());
 			}
 			if(StringUtils.isNotEmpty(searchVO.getDatetimeStart()) && StringUtils.isNotEmpty(searchVO.getDatetimeEnd())){
 				sql.append("and logTime between '"+searchVO.getDatetimeStart()+"' and DATE_ADD('"+searchVO.getDatetimeEnd()+"',INTERVAL 1 DAY)");
@@ -66,7 +74,7 @@ public class TimeLineDaoImpl implements TimeLineDao {
 		SQLQuery query = this
 				.getCurrentSession()
 				.createSQLQuery(
-						"select * from timeline where userId = ?")
+						"select * from timeline where userId = ? and recordStatus = 'A'")
 				.addEntity(TimeLine.class);
 		query.setParameter(0, userId);
 		TimeLine timeLine = (TimeLine) query.uniqueResult();
@@ -76,11 +84,12 @@ public class TimeLineDaoImpl implements TimeLineDao {
 	
 	public void deleteTimeLineById(String userId){
 		TimeLine timeLine = getTimeLineByUserId(userId);
-		this.getCurrentSession().delete(timeLine);
+		timeLine.setRecordStatus("D");
+		this.getCurrentSession().update(timeLine);
 	}
 	
 	public List<TimeLine> getAllTimeLine() {
-		SQLQuery query = this.getCurrentSession().createSQLQuery("select * from timeline order by logTime desc").addEntity(TimeLine.class);
+		SQLQuery query = this.getCurrentSession().createSQLQuery("select * from timeline where recordStatus = 'A' order by logTime desc").addEntity(TimeLine.class);
 		List<TimeLine> list = query.list();
 		return list;
 	}
@@ -90,11 +99,39 @@ public class TimeLineDaoImpl implements TimeLineDao {
 	 * 
 	 * @return
 	 */
-	public List<TimeLine> findOnePage(int offset, int pagesize) {
-		String sql = "from TimeLine";
+	public Map findOnePage(int offset, int pagesize, SearchVO searchVO) {
 		List<TimeLine> lst = null;
+		Integer count = 0;
+		Map map = new HashMap();
 		try {
-			Query query = this.getCurrentSession().createQuery(sql);
+			StringBuffer sql = new StringBuffer("select * from TimeLine where recordStatus = 'A' ");
+			if (searchVO != null) {
+				if (StringUtils.isNotEmpty(searchVO.getUsername())) {
+					sql.append("and username = '" + searchVO.getUsername()+"'");
+				}
+				if (StringUtils.isNotEmpty(searchVO.getContent())) {
+					sql.append("and content like '%" + searchVO.getContent()+"%'");
+				}
+				if(StringUtils.isEmpty(searchVO.getDatetimeStart()) && StringUtils.isNotEmpty(searchVO.getDatetimeEnd())){
+					sql.append("and logTime <= "+" DATE_ADD('"+searchVO.getDatetimeEnd()+"',INTERVAL 1 DAY)");
+				}
+				if(StringUtils.isNotEmpty(searchVO.getDatetimeStart()) && StringUtils.isEmpty(searchVO.getDatetimeEnd())){
+					sql.append("and logTime >= '"+searchVO.getDatetimeStart()+"'");
+				}
+				if(StringUtils.isNotEmpty(searchVO.getDatetimeStart()) && StringUtils.isNotEmpty(searchVO.getDatetimeEnd())){
+					sql.append("and logTime between '"+searchVO.getDatetimeStart()+"' and DATE_ADD('"+searchVO.getDatetimeEnd()+"',INTERVAL 1 DAY)");
+				}
+			}
+			SQLQuery queryCount = this.getCurrentSession().createSQLQuery(sql.toString());
+			lst = queryCount.list();
+			if(lst != null && lst.size()>0){
+				count = lst.size();
+				
+			}
+			
+			sql.append(" order by logTime desc");
+			SQLQuery query = this.getCurrentSession().createSQLQuery(sql.toString()).addEntity(TimeLine.class);
+			 
 			if (offset != 0 && pagesize != 0) {
 				// 从第(offset - 1) * pagesize条记录开始
 				query.setFirstResult((offset - 1) * pagesize);
@@ -110,10 +147,20 @@ public class TimeLineDaoImpl implements TimeLineDao {
 			}
 
 			lst = query.list();
+			map.put("list", lst);
+			map.put("count", count);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		return lst;
+		return map;
+	}
+	
+	public List<String> findAllTineLineUsername(){
+		String sql = "select distinct username from t_user;";
+		SQLQuery query = this.getCurrentSession().createSQLQuery(sql);
+		List<String> list = query.list();
+		
+		return list;
 	}
 
 }

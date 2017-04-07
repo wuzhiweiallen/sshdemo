@@ -113,9 +113,9 @@ function barter_btn(bb) {
 
 <body class="login_body">
 
-<div class="login_div">
-	<div class="col-xs-12 login_title">登录</div>
-	<form action="user_login" class="login" method="post">
+<%-- <div class="login_div">
+	<div class="col-xs-12 login_title">更新用户信息</div>
+	<form action="user_update" class="login" method="post">
 		<div class="nav">
 			<div class="nav login_nav">
 				<div class="col-xs-4 login_username">
@@ -123,7 +123,7 @@ function barter_btn(bb) {
 				</div>
 				
 				<div class="col-xs-6 login_usernameInput">
-					<input type="text" name="user.username" id="name" value="" placeholder="&nbsp;&nbsp;用户名/手机号"  onblur="javascript:ok_or_errorBylogin(this)" />
+					<input type="text" name="user.username" value="user.username" id="name" value="" placeholder="&nbsp;&nbsp;用户名/手机号"  onblur="javascript:ok_or_errorBylogin(this)" />
 				</div>
 				<div class="col-xs-1 ok_gou">
 					√
@@ -137,7 +137,7 @@ function barter_btn(bb) {
 					密&nbsp;&nbsp;&nbsp;码:
 				</div>
 				<div class="col-xs-6">
-					<input type="password" name="user.password" id="psd" value="" placeholder="&nbsp;&nbsp;密码" onBlur="javascript:ok_or_errorBylogin(this)" />
+					<input type="password" name="user.password" value="<s:property value="user.password"/>" id="psd" value="" placeholder="&nbsp;&nbsp;密码" onBlur="javascript:ok_or_errorBylogin(this)" />
 				</div>
 				<div class="col-xs-1 ok_gou">
 					√
@@ -155,18 +155,18 @@ function barter_btn(bb) {
 	<div class="col-xs-12 barter_btnDiv">
 		<button class="barter_btn" onClick="javascript:barter_btn(this)">没有账号?前往注册</button>
 	</div>
-</div>
+</div> --%>
 
-<div class="register_body">
-	<div class="col-xs-12 register_title">注册</div>
-	<form action="user_register.action" class="register" method="post" enctype="multipart/form-data" >
+<div class="login_div">
+	<div class="col-xs-12 register_title">更新用户信息</div>
+	<form action="user_updateUserInfo.action" class="register" method="post" enctype="multipart/form-data" >
 		<div class="nav">
 			<div class="nav register_nav">
 				<div class="col-xs-4">
 					用户名:
 				</div>
 				<div class="col-xs-6">
-					<input type="text" name="user.username" id="name_r" value="" placeholder="&nbsp;&nbsp;用户名/手机号" onBlur="javascript:ok_or_errorByRegister(this)" />
+					<input type="text" name="user.username" value="<s:property value="#session.user.username"/>" id="name_r" value="" placeholder="&nbsp;&nbsp;用户名/手机号" onBlur="javascript:ok_or_errorByRegister(this)" />
 				</div>
 				<div class="col-xs-1 ok_gou">
 					√
@@ -194,7 +194,7 @@ function barter_btn(bb) {
 					密&nbsp;&nbsp;&nbsp;码:
 				</div>
 				<div class="col-xs-6">
-					<input type="password" name="user.password" id="psd_r" value="" placeholder="&nbsp;&nbsp;密码" onBlur="javascript:ok_or_errorByRegister(this)" />
+					<input type="text" name="user.password" value="<s:property value="#session.user.password"/>" id="psd_r" value="" placeholder="&nbsp;&nbsp;密码" onBlur="javascript:ok_or_errorByRegister(this)" />
 				</div>
 				<div class="col-xs-1 ok_gou">
 					√
@@ -203,7 +203,7 @@ function barter_btn(bb) {
 					×
 				</div>
 			</div>
-			<div class="nav register_affirm">
+			<!-- <div class="nav register_affirm">
 				<div class="col-xs-4">
 					确认密码:
 				</div>
@@ -216,15 +216,16 @@ function barter_btn(bb) {
 				<div class="col-xs-1 error_cuo">
 					×
 				</div>
-			</div>
+			</div> -->
+			<br/>
+			<br/>
+			<br/>
 			<div class="col-xs-12 register_btn_div">
-				<input type="submit" class="sub_btn" value="注册" id="register" />
+			    <button type="submit" class="sub_btn">更新</button>
+				<!-- <input type="submit" class="sub_btn" value="更新" id="register" /> -->
 			</div>
 		</div>
 	</form>
-	<div class="col-xs-12 barter_register">
-		<button class="barter_registerBtn" onClick="javascript:barter_btn(this)" style="">已有秘籍?返回登录</button>
-	</div>
 </div>
 <div style="text-align:center;">
 </div>

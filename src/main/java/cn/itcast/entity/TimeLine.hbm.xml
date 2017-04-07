@@ -11,6 +11,7 @@
 		<property name="username" column="username"></property>
 		<property name="content" column="content"></property>
 		<property name="logTime" column="logtime"></property>
+		<property name="recordStatus" column="recordStatus"></property>
 	</class>
 </hibernate-mapping>
 

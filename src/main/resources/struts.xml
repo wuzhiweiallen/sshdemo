@@ -3,25 +3,35 @@
 	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
-<constant name="struts.i18n.encoding" value="utf-8"></constant> 
+	<constant name="struts.i18n.encoding" value="utf-8"></constant>
 	<package name="user" extends="struts-default" namespace="/">
-		<!-- class属性里面不写action全路径了，因为写，action对象创建两次
-			写spring配置的action的bean的id值
-		 -->
+		<!-- class属性里面不写action全路径了，因为写，action对象创建两次 写spring配置的action的bean的id值 -->
 		<!-- <action name="userAction" class="userAction"></action> -->
 		<action name="user_*" class="userAction" method="{1}">
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">100000000</param>
+				<param name="allowedTypes">image/jpeg,image/png</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+			<result name="login">/login.jsp</result>
 			<result name="success" type="chain">timeLine_pagination</result>
 			<result name="error">/fail.jsp</result>
+			<result name="updateUserInfo">/updateUserInfo.jsp</result>
 		</action>
-		<!-- <action name="GetTimeLine" class="timeLineAction" method="getTimeLine">
-			<result name="success">/success.jsp</result>
-			<result name="error">/fail.jsp</result>
-		</action> -->
 		<action name="timeLine_*" class="timeLineAction" method="{1}">
 			<result name="success">/success.jsp</result>
 			<result name="error">/fail.jsp</result>
 		</action>
+
 	</package>
+	<!-- <package name="user1" extends="json-default" namespace="/">
+		<action name="paginationAjax" class="timeLineAction"
+			method="paginationAjax">
+			<result name="success" type="json">
+				这里指定将被Struts2序列化的属性，该属性在action中必须有对应的getter方法
+			</result>
+		</action>
+	</package> -->
 </struts>
 
 

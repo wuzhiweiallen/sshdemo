@@ -1,6 +1,7 @@
 package cn.itcast.service;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.itcast.entity.TimeLine;
 import cn.itcast.searchvo.SearchVO;
@@ -36,11 +37,16 @@ public interface TimeLineService {
 	 * @param pagesize
 	 * @return
 	 */
-	public List<TimeLine> findOnePage(int offset, int pagesize);
+	public Map findOnePage(int offset, int pagesize,SearchVO searchVO);
 	/**
 	 * 
 	 * @return
 	 */
 	public List<TimeLine> getAllTimeLine();
+	/**
+	 * 
+	 * @return
+	 */
+	public List<String> findAllTineLineUsername();
 
 }

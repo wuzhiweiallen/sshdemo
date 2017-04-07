@@ -1,6 +1,7 @@
 package cn.itcast.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.itcast.entity.TimeLine;
 import cn.itcast.searchvo.SearchVO;
@@ -35,10 +36,15 @@ public interface TimeLineDao {
 	 * @param pagesize
 	 * @return
 	 */
-	public List<TimeLine> findOnePage(int offset, int pagesize);
+	public Map findOnePage(int offset, int pagesize, SearchVO searchVO);
 	/**
 	 * 
 	 * @return
 	 */
 	public List<TimeLine> getAllTimeLine();
+	/**
+	 * 
+	 * @return
+	 */
+	public List<String> findAllTineLineUsername();
 }

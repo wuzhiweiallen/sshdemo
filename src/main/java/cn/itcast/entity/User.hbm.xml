@@ -15,6 +15,7 @@
 		<property name="username" column="username"></property>
 		<property name="address" column="address"></property>
 		<property name="password" column="password"></property>
+		<property name="imagePath" column="imagePath"></property>
 	</class>
 </hibernate-mapping>
 

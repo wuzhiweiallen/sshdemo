@@ -9,6 +9,14 @@ public class TimeLine implements Serializable{
 	private String username;
 	private String content;
 	private Date logTime;
+	private String recordStatus;
+	
+	public String getRecordStatus() {
+		return recordStatus;
+	}
+	public void setRecordStatus(String recordStatus) {
+		this.recordStatus = recordStatus;
+	}
 	public Integer getUserId() {
 		return userId;
 	}

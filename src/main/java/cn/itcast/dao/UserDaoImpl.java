@@ -34,6 +34,14 @@ public class UserDaoImpl implements UserDao {
 		return null;
 	}
 	
+	public void save (User user){
+		this.getCurrentSession().save(user);
+	}
+	
+	public void updateUser(User user){
+		this.getCurrentSession().update(user);
+	}
+	
 }
 
 

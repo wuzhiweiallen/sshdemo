@@ -8,7 +8,14 @@ public class User implements Serializable{
 	private String username;
 	private String address;
 	private String password;
+	private String imagePath;
 	
+	public String getImagePath() {
+		return imagePath;
+	}
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
 	public Integer getUid() {
 		return uid;
 	}

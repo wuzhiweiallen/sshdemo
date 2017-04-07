@@ -2,6 +2,7 @@ package cn.itcast.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -35,6 +36,7 @@ public class TimeLineServiceImpl implements TimeLineService {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		timeLine.setUsername(user.getUsername());
+		timeLine.setRecordStatus("A");
 		timeLineDao.save(timeLine);
 
 	}
@@ -53,14 +55,20 @@ public class TimeLineServiceImpl implements TimeLineService {
 		timeLineDao.deleteTimeLineById(userId);
 	}
 
-	public List<TimeLine> findOnePage(int offset, int pagesize) {
-		List<TimeLine> list = timeLineDao.findOnePage(offset, pagesize);
+	public Map findOnePage(int offset, int pagesize,SearchVO searchVO) {
+		Map map = timeLineDao.findOnePage(offset, pagesize,searchVO);
 		
-		return list;
+		return map;
 	}
 	
 	public List<TimeLine> getAllTimeLine() {
 		List<TimeLine> list = timeLineDao.getAllTimeLine();
+		
+		return list;
+	}
+	
+	public List<String> findAllTineLineUsername(){
+		List<String> list = timeLineDao.findAllTineLineUsername();
 		
 		return list;
 	}
