@@ -3,6 +3,7 @@ package cn.itcast.action;
 import java.io.File;
 import java.io.IOException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -63,9 +64,12 @@ public class UserAction extends ActionSupport {
 	}
 
 	public String login() throws Exception {
+		if(user == null){
+			return "login";
+		}
 		boolean loginFlag = userService.login(user.getUsername(), user.getPassword());
 		if(!loginFlag)
-			return ERROR;
+			return "login";
 		
 		return SUCCESS;
 	}
@@ -73,10 +77,13 @@ public class UserAction extends ActionSupport {
 	public String logout(){
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpSession session = request.getSession();
-		session.removeAttribute("user");
-		session.removeAttribute("imagepath");
 		User user = (User) session.getAttribute("user");
 		String imagepath = (String) session.getAttribute("imagepath");
+		ServletContext servletContext = ServletActionContext.getServletContext();
+		servletContext.removeAttribute(user.getUsername());
+		session.removeAttribute("user");
+		session.removeAttribute("imagepath");
+		
 		
 		return "login";
 	}

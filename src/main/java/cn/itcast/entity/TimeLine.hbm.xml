@@ -5,13 +5,23 @@
 <hibernate-mapping>
 	<!-- 1 配置类和表对应 class标签 name属性：实体类全路径 table属性：数据库表名称 -->
 	<class name="cn.itcast.entity.TimeLine" table="timeline">
-		<id name="userId" column="userId">
+		<id name="id" column="id">
 			<generator class="native"></generator>
 		</id>
 		<property name="username" column="username"></property>
 		<property name="content" column="content"></property>
 		<property name="logTime" column="logtime"></property>
+		<property name="imageName" column="imageName"></property>
 		<property name="recordStatus" column="recordStatus"></property>
+		<set name="commentsSet" batch-size="10">
+			<!-- 一对多建表，有外键
+				hibernate机制：双向维护外键，在一和多那一方都配置外键	
+				column属性值：外键名称
+			 -->
+			<key column="tid"></key>
+			<!-- 客户所有的联系人，class里面写联系人实体类全路径 -->
+			<one-to-many class="cn.itcast.entity.Comments"/>
+		</set>
 	</class>
 </hibernate-mapping>
 

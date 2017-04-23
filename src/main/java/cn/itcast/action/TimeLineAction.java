@@ -1,16 +1,16 @@
 package cn.itcast.action;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import cn.itcast.entity.Comments;
 import cn.itcast.entity.TimeLine;
 import cn.itcast.searchvo.SearchVO;
 import cn.itcast.service.TimeLineService;
@@ -26,7 +26,7 @@ public class TimeLineAction  extends ActionSupport {
 	
 	//属性封装
 	private int curpage ;
-	private String userId;
+	private int id;
 	//存储log的内容，传给save方法
 	private String content;
 	//表达式封装数据（模型驱动封装不能同时使用属性封装所以在这里选择表达式封装）
@@ -34,7 +34,26 @@ public class TimeLineAction  extends ActionSupport {
 	//放到struts2值栈中
 	private List<TimeLine> list = new ArrayList<TimeLine>();
 	private List<String> listUsername = new ArrayList<String>();
+	//发布说说的图片
+	private List<File> timeLineImage;
+	private List<String> timeLineImageFileName;
 	
+	public List<String> getTimeLineImageFileName() {
+		return timeLineImageFileName;
+	}
+
+	public void setTimeLineImageFileName(List<String> timeLineImageFileName) {
+		this.timeLineImageFileName = timeLineImageFileName;
+	}
+
+	public List<File> getTimeLineImage() {
+		return timeLineImage;
+	}
+
+	public void setTimeLineImage(List<File> timeLineImage) {
+		this.timeLineImage = timeLineImage;
+	}
+
 	public String getContent() {
 		return content;
 	}
@@ -63,12 +82,12 @@ public class TimeLineAction  extends ActionSupport {
 		this.curpage = curpage;
 	}
 
-	public String getUserId() {
-		return userId;
+	public int getId() {
+		return id;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public List<TimeLine> getList() {
@@ -84,10 +103,10 @@ public class TimeLineAction  extends ActionSupport {
 		return SUCCESS;
 	}
 	
-	public String save(){
-		timeLineService.save(content);
+	public void save(){
 		
-		return NONE;
+		timeLineService.save(timeLineImage,content,timeLineImageFileName);
+		
 	}
 	
 	public String searchTimeLine(){
@@ -97,56 +116,22 @@ public class TimeLineAction  extends ActionSupport {
 	}
 	
 	public String deleteTimeLineById(){
-		timeLineService.deleteTimeLineById(userId);
+		timeLineService.deleteTimeLineById(id);
 		pagination();
 		
 		return SUCCESS;
 	}
 	
-	/*@SuppressWarnings({"all"})
-	public String paginationAjax(){
-		int pagesize = 8;// 每页显示数
-		// 查询出第curpage页的记录,当第一次登录进来，curpage为0 了，所以默赋值为1，默认显示出第一页的数据。
-		if(curpage == 0){
-			curpage = 1;
-		}
-		map = timeLineService.findOnePage(curpage, pagesize,searchVO);
-		list = (List<TimeLine>) map.get("list");
-		//得到记录总数
-		Integer total = (Integer) map.get("count");
-		int lastpage = total%pagesize==0?total/pagesize:total/pagesize+1;//得到尾页的值
-		//put into map
-		map.put("lastpage",lastpage);
-		map.put("total",total);
-		map.put("curpage",curpage);
-		map.put("nextpage",curpage+1<=lastpage?curpage+1:lastpage);
-		map.put("prepage",curpage-1>0?curpage-1:1);
-		
-		map.put("list", list);
-		
-		return SUCCESS;
-	}*/
-	
 	@SuppressWarnings({"all"})
 	public String pagination(){
-		int pagesize = 8;// 每页显示数
-		// 查询出第curpage页的记录,当第一次登录进来，curpage为0 了，所以默赋值为1，默认显示出第一页的数据。
-		if(curpage == 0){
-			curpage = 1;
-		}
-		Map map = timeLineService.findOnePage(curpage, pagesize,searchVO);
+		Map map = timeLineService.pagination(curpage, searchVO);
 		list = (List<TimeLine>) map.get("list");
-		//得到记录总数
-		Integer total = (Integer) map.get("count");
-		int lastpage = total%pagesize==0?total/pagesize:total/pagesize+1;//得到尾页的值
-		listUsername = timeLineService.findAllTineLineUsername();
-		HttpServletRequest request = ServletActionContext.getRequest();
-		//put into Servlet field
-		request.setAttribute("lastpage",lastpage);
-		request.setAttribute("total",total);
-		request.setAttribute("curpage",curpage);
-		request.setAttribute("nextpage",curpage+1<=lastpage?curpage+1:lastpage);
-		request.setAttribute("prepage",curpage-1>0?curpage-1:1);
+		
+		return SUCCESS;
+	}
+	
+	public String saveReply(){
+		timeLineService.saveTimeLine(id, content);
 		
 		return SUCCESS;
 	}

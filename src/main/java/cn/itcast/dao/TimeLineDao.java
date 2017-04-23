@@ -3,6 +3,7 @@ package cn.itcast.dao;
 import java.util.List;
 import java.util.Map;
 
+import cn.itcast.entity.Comments;
 import cn.itcast.entity.TimeLine;
 import cn.itcast.searchvo.SearchVO;
 
@@ -29,7 +30,7 @@ public interface TimeLineDao {
 	 * 
 	 * @param userId
 	 */
-	public void deleteTimeLineById(String userId);
+	public void deleteTimeLineById(int id);
 	/**
 	 * 
 	 * @param offset
@@ -47,4 +48,15 @@ public interface TimeLineDao {
 	 * @return
 	 */
 	public List<String> findAllTineLineUsername();
+	/**
+	 * 
+	 * @param comments
+	 */
+	public void saveComments(Comments comments);
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public TimeLine getTimeLineById(int id);
 }

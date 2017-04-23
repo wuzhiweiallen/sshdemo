@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<!-- 1 配置类和表对应 
+		class标签
+		name属性：实体类全路径
+		table属性：数据库表名称
+	-->
+	<class name="cn.itcast.entity.Comments" table="comments" lazy="false">
+		<id name="cid" column="cid">
+			<generator class="native"></generator>
+		</id>
+		<property name="content" column="content"></property>
+		<property name="cusername" column="cusername"></property>
+		<property name="replytime" column="replytime"></property>
+		<many-to-one name="timeLine" lazy="false" class="cn.itcast.entity.TimeLine" column="tid"></many-to-one>
+	</class>
+</hibernate-mapping>
+
+
+
+
+

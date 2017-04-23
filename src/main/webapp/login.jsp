@@ -5,7 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>登录界面</title>
-
+<link href="css/common.css" type="text/css" rel="stylesheet"/>
+<link href="css/index.css" type="text/css" rel="stylesheet"/>
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 
@@ -147,8 +148,9 @@ function barter_btn(bb) {
 				</div>
 			</div>
 			<div class="col-xs-12 login_btn_div">
-				<input type="submit" class="sub_btn" value="登录" id="login" />
+				<input align="center" type="submit" class="sub_btn" value="登录" id="login" />
 			</div>
+			<s:property value="#request.errorMessage"></s:property>
 		</div>
 	</form>
 

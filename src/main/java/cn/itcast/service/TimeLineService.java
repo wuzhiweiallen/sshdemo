@@ -1,5 +1,6 @@
 package cn.itcast.service;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -10,9 +11,11 @@ public interface TimeLineService {
 	
 	/**
 	 * 
+	 * @param timeLineImage
 	 * @param content
+	 * @param timeLineImageFileName
 	 */
-	public void save(String content);
+	public void save(List<File> timeLineImage,String content,List<String> timeLineImageFileName);
 	
 	/**
 	 * 
@@ -30,7 +33,7 @@ public interface TimeLineService {
 	 * 
 	 * @param userId
 	 */
-	public void deleteTimeLineById(String userId);
+	public void deleteTimeLineById(int userId);
 	/**
 	 * 
 	 * @param offset
@@ -48,5 +51,18 @@ public interface TimeLineService {
 	 * @return
 	 */
 	public List<String> findAllTineLineUsername();
+	/**
+	 * 
+	 * @param curpage
+	 * @param searchVO
+	 * @return
+	 */
+	public Map pagination(Integer curpage,SearchVO searchVO);
+	/**
+	 * 
+	 * @param id
+	 * @param content
+	 */
+	public void saveTimeLine(int id,String content);
 
 }
