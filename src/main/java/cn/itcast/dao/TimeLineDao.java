@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.itcast.entity.Comments;
+import cn.itcast.entity.SubComments;
 import cn.itcast.entity.TimeLine;
 import cn.itcast.searchvo.SearchVO;
 
@@ -59,4 +60,15 @@ public interface TimeLineDao {
 	 * @return
 	 */
 	public TimeLine getTimeLineById(int id);
+	/**
+	 * 
+	 * @param subComments
+	 */
+	public void saveSubComments(SubComments subComments);
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Comments getSubCommentsById(int id);
 }

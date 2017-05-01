@@ -3,7 +3,6 @@ package cn.itcast.dao;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.SQLQuery;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import cn.itcast.entity.Comments;
+import cn.itcast.entity.SubComments;
 import cn.itcast.entity.TimeLine;
 import cn.itcast.searchvo.SearchVO;
 
@@ -171,12 +171,12 @@ public class TimeLineDaoImpl implements TimeLineDao {
 			}
 
 			lst = query.list();
-			for (TimeLine t : lst) {
+			/*for (TimeLine t : lst) {
 				Set<Comments> s = t.getCommentsSet();
 				for (Comments c : s) {
 					System.out.println(c.getContent());
 				}
-			}
+			}*/
 			map.put("list", lst);
 			map.put("count", count);
 		} catch (Exception ex) {
@@ -196,6 +196,16 @@ public class TimeLineDaoImpl implements TimeLineDao {
 	public void saveComments(Comments comments) {
 		this.getCurrentSession().save(comments);
 
+	}
+	
+	public void saveSubComments(SubComments subComments) {
+		this.getCurrentSession().save(subComments);
+	}
+	
+	public Comments getSubCommentsById(int id){
+		Comments comments = (Comments) this.getCurrentSession().get(Comments.class, id);
+		
+		return comments;
 	}
 
 }

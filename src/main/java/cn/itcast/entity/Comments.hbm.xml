@@ -16,6 +16,16 @@
 		<property name="cusername" column="cusername"></property>
 		<property name="replytime" column="replytime"></property>
 		<many-to-one name="timeLine" lazy="false" class="cn.itcast.entity.TimeLine" column="tid"></many-to-one>
+		
+		<set name="subcommentsSet" batch-size="10" lazy="false" order-by="replytime asc">
+			<!-- 一对多建表，有外键
+				hibernate机制：双向维护外键，在一和多那一方都配置外键	
+				column属性值：外键名称
+			 -->
+			<key column="cid"></key>
+			<!-- 客户所有的联系人，class里面写联系人实体类全路径 -->
+			<one-to-many class="cn.itcast.entity.SubComments"/>
+		</set>
 	</class>
 </hibernate-mapping>
 

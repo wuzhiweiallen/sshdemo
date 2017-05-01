@@ -397,7 +397,15 @@
 						<s:iterator value="commentsSet" var="comment">
 							<s:property value="#comment.cusername"/> : <s:property value="#comment.content"/> &nbsp;&nbsp; <span id="hour"><s:date
 								name="#comment.replytime" format="yyyy-MM-dd" />&nbsp;&nbsp;<span
+							id="hour"><s:date name="#comment.replytime" format="hh:mm:ss" /></span></span>
+							
+							<br>&nbsp;&nbsp;
+							<s:iterator value="#comment.subCommentsSet" var="subComment">
+							 <s:property value="#subComment.susername"/> : <s:property value="#subComment.content"/> &nbsp;&nbsp; <span id="hour"><s:date
+								name="#subComment.replytime" format="yyyy-MM-dd" />&nbsp;&nbsp;<span
 							id="hour"><s:date name="#comment.replytime" format="hh:mm:ss" /></span></span><br>
+							
+							</s:iterator>
 						</s:iterator>
 						<s:if test="username==#session.user.username">
 							<s:a href="timeLine_deleteTimeLineById.action?id=%{id}">
@@ -488,13 +496,36 @@
 		autoclose : 1,
 	});
 	function replyTimeLineById(i,id){
-		var content = $("#reply").eq(i).val();
+		var content = $("textarea[name='reply']").eq(i).val();
 		if(content == ""){
 			alert("请输入内容");
 			return;
 		}
 		$.ajax({
 			url : '/sshdemo/timeLine_saveReply.action',
+			type : 'POST',
+			Async : false,
+			data : {
+				"id":id,
+				"content":content,
+			},
+			success : function(data) {
+				window.location.href = "/sshdemo/timeLine_pagination.action?curpage=1";
+			},
+			error :  function(XMLHttpRequest, textStatus, errorThrown){
+		          alert("评论出错");
+		       }
+		});
+	}
+	
+	function subReply(i,id){
+		var content = $("textarea[name='subReply']").eq(i).val();
+		if(content == ""){
+			alert("请输入内容");
+			return;
+		}
+		$.ajax({
+			url : '/sshdemo/timeLine_saveSubReply.action',
 			type : 'POST',
 			Async : false,
 			data : {

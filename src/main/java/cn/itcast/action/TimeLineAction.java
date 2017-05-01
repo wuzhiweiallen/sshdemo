@@ -135,5 +135,11 @@ public class TimeLineAction  extends ActionSupport {
 		
 		return SUCCESS;
 	}
+	
+	public String saveSubReply(){
+		timeLineService.saveSubComments(id, content);
+		
+		return SUCCESS;
+	}
 
 }

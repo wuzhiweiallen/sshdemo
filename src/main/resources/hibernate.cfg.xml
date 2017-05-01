@@ -31,6 +31,7 @@
 		<mapping resource="cn/itcast/entity/User.hbm.xml"/>
 		<mapping resource="cn/itcast/entity/TimeLine.hbm.xml"/>
 		<mapping resource="cn/itcast/entity/Comments.hbm.xml"/>
+		<mapping resource="cn/itcast/entity/SubComments.hbm.xml"/>
 	</session-factory>
 </hibernate-configuration>
 

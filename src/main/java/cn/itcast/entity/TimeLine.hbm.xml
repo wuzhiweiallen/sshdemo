@@ -13,7 +13,7 @@
 		<property name="logTime" column="logtime"></property>
 		<property name="imageName" column="imageName"></property>
 		<property name="recordStatus" column="recordStatus"></property>
-		<set name="commentsSet" batch-size="10">
+		<set name="commentsSet" batch-size="10" lazy="false" order-by="replytime asc">
 			<!-- 一对多建表，有外键
 				hibernate机制：双向维护外键，在一和多那一方都配置外键	
 				column属性值：外键名称

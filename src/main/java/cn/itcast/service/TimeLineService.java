@@ -64,5 +64,11 @@ public interface TimeLineService {
 	 * @param content
 	 */
 	public void saveTimeLine(int id,String content);
+	/**
+	 * 
+	 * @param cid
+	 * @param content
+	 */
+	public void saveSubComments(int cid,String content);
 
 }

@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.itcast.dao.TimeLineDao;
 import cn.itcast.dao.UserDao;
 import cn.itcast.entity.Comments;
+import cn.itcast.entity.SubComments;
 import cn.itcast.entity.TimeLine;
 import cn.itcast.entity.User;
 import cn.itcast.searchvo.SearchVO;
@@ -175,6 +176,20 @@ public class TimeLineServiceImpl implements TimeLineService {
 		Date date = new Date();
 		comments.setReplytime(date);
 		timeLineDao.saveComments(comments);
+	}
+	
+	public void saveSubComments(int cid,String content){
+		Comments comments = timeLineDao.getSubCommentsById(cid);
+		HttpServletRequest request = (HttpServletRequest) ServletActionContext.getRequest();
+		HttpSession Session = request.getSession();
+		User user = (User) Session.getAttribute("user");
+		SubComments subComments = new SubComments();
+		subComments.setContent(content);
+		Date date = new Date();
+		subComments.setReplytime(date);
+		subComments.setComments(comments);
+		subComments.setSusername(user.getUsername());
+		timeLineDao.saveSubComments(subComments);
 	}
 	/*//得到拼接后的comments
 	public String getComments(String comments,String content){
